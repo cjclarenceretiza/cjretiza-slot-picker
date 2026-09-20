@@ -11,12 +11,15 @@ import { BookingService } from '../../core/services/booking.service';
 
 import { Salon, Staff, Service } from '../../core/models';
 
+import { BookingsListComponent } from '../bookings-list/bookings-list.component';
+
 @Component({
   selector: 'app-book-slot',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule, BookingsListComponent],
   templateUrl: './book-slot.component.html'
 })
+
 export class BookSlotComponent implements OnInit {
   private salonService = inject(SalonService);
   private staffService = inject(StaffService);

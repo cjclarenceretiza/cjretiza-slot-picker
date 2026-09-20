@@ -76,4 +76,13 @@
   } @else {
     <p class="text-sm text-gray-500">Select a staff member, service, and date to see available times.</p>
   }
+
+  @if (selectedStaffId() && selectedSalon()) {
+    <app-bookings-list
+      [staffId]="selectedStaffId()!"
+      [date]="selectedDate()"
+      [timezone]="selectedSalon()!.timezone"
+      (bookingCancelled)="searchSlots()">
+    </app-bookings-list>
+  }
 </section>
