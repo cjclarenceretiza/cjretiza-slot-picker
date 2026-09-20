@@ -78,11 +78,20 @@
   }
 
   @if (selectedStaffId() && selectedSalon()) {
-    <app-bookings-list
-      [staffId]="selectedStaffId()!"
-      [date]="selectedDate()"
-      [timezone]="selectedSalon()!.timezone"
-      (bookingCancelled)="searchSlots()">
-    </app-bookings-list>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <app-bookings-list
+        [staffId]="selectedStaffId()!"
+        [date]="selectedDate()"
+        [timezone]="selectedSalon()!.timezone"
+        (bookingCancelled)="searchSlots()">
+      </app-bookings-list>
+
+      <app-time-off
+        [staffId]="selectedStaffId()!"
+        [date]="selectedDate()"
+        [timezone]="selectedSalon()!.timezone"
+        (timeOffChanged)="searchSlots()">
+      </app-time-off>
+    </div>
   }
 </section>

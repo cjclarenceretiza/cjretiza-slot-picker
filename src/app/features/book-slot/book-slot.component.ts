@@ -12,11 +12,12 @@ import { BookingService } from '../../core/services/booking.service';
 import { Salon, Staff, Service } from '../../core/models';
 
 import { BookingsListComponent } from '../bookings-list/bookings-list.component';
+import { TimeOffComponent } from '../time-off/time-off.component';
 
 @Component({
   selector: 'app-book-slot',
   standalone: true,
-  imports: [FormsModule, BookingsListComponent],
+  imports: [FormsModule, BookingsListComponent, TimeOffComponent],
   templateUrl: './book-slot.component.html'
 })
 
@@ -138,6 +139,7 @@ export class BookSlotComponent implements OnInit {
   }
 
   async bookSlot(isoUtc: string) {
+    if (this.booking()) return;
     if (!this.customerName().trim()) {
       this.errorMessage.set('Enter a customer name first.');
       return;
