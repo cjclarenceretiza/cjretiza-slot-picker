@@ -14,6 +14,7 @@ export class BookingsListComponent implements OnChanges {
   @Input({ required: true }) staffId!: string;
   @Input({ required: true }) date!: string;
   @Input({ required: true }) timezone!: string;
+  @Input() refreshTrigger = 0; 
 
   @Output() bookingCancelled = new EventEmitter<void>();
 

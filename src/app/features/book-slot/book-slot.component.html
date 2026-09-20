@@ -92,6 +92,7 @@
           [staffId]="selectedStaffId()!"
           [date]="selectedDate()"
           [timezone]="selectedSalon()!.timezone"
+          [refreshTrigger]="refreshCounter()"
           (bookingCancelled)="searchSlots()">
         </app-bookings-list>
 

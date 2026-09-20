@@ -46,6 +46,8 @@ export class BookSlotComponent implements OnInit {
   booking = signal(false);
   errorMessage = signal<string | null>(null);
 
+  refreshCounter = signal(0);
+
   selectedSalon = computed(() =>
     this.salons().find(s => s.id === this.selectedSalonId()) ?? null
   );
@@ -74,6 +76,10 @@ export class BookSlotComponent implements OnInit {
 
   private today(): string {
     return new Date().toISOString().slice(0, 10);
+  }
+
+  private bumpRefresh() {                    // ← moved here
+    this.refreshCounter.update(n => n + 1);
   }
 
   async onSalonChange(salonId: string) {
@@ -165,6 +171,7 @@ export class BookSlotComponent implements OnInit {
 
       this.customerName.set('');
       await this.searchSlots(); // booked slot disappears
+      this.bumpRefresh();
     } catch (err: any) {
       this.errorMessage.set(err.message ?? 'Failed to create booking.');
     } finally {
