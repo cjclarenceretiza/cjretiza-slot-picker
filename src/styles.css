@@ -10,3 +10,8 @@
   --color-terracotta: #C78D84;
   --color-charcoal: #181A1B;
 }
+
+body {
+  background-color: var(--color-ink);
+  color: var(--color-stone);
+}

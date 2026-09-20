@@ -1,48 +1,48 @@
-<div class="border rounded p-4 space-y-3">
+<div class="border-3 border-sage/50 rounded-lg p-6 space-y-3 text-stone">
   <div class="flex items-center justify-between">
-    <h3 class="font-semibold font-serif text-lg">Time off</h3>
+    <h3 class="font-semibold font-serif text-2xl text-sage">Time off</h3>
     <button
-      class="px-3 py-1 rounded bg-ink text-white text-sm hover:opacity-90"
+      class="px-3 py-1 rounded bg-sage text-ink text-sm font-medium hover:opacity-90"
       (click)="openAddForm()">
       + Add time off
     </button>
   </div>
 
   @if (errorMessage()) {
-    <p class="text-red-600 text-sm">{{ errorMessage() }}</p>
+    <p class="text-terracotta text-sm">{{ errorMessage() }}</p>
   }
 
   @if (showForm()) {
-    <div class="border rounded p-3 space-y-2 bg-stone/20">
+    <div class="border border-stone/20 rounded p-3 space-y-2 bg-charcoal/40">
       <div class="grid grid-cols-2 gap-2">
         <div>
-          <label class="block text-xs mb-1">Start</label>
-          <input type="time" class="border rounded px-2 py-1 w-full"
+          <label class="block text-xs mb-1 text-stone">Start</label>
+          <input type="time" class="rounded px-2 py-1 w-full bg-charcoal border border-stone/30 text-stone"
                  [value]="formStart()"
                  (input)="formStart.set($any($event.target).value)" />
         </div>
         <div>
-          <label class="block text-xs mb-1">End</label>
-          <input type="time" class="border rounded px-2 py-1 w-full"
+          <label class="block text-xs mb-1 text-stone">End</label>
+          <input type="time" class="rounded px-2 py-1 w-full bg-charcoal border border-stone/30 text-stone"
                  [value]="formEnd()"
                  (input)="formEnd.set($any($event.target).value)" />
         </div>
       </div>
       <div>
-        <label class="block text-xs mb-1">Reason</label>
-        <input type="text" class="border rounded px-2 py-1 w-full" placeholder="e.g. break"
+        <label class="block text-xs mb-1 text-stone">Reason</label>
+        <input type="text" class="rounded px-2 py-1 w-full bg-charcoal border border-stone/30 text-stone placeholder:text-stone/40" placeholder="e.g. break"
                [value]="formReason()"
                (input)="formReason.set($any($event.target).value)" />
       </div>
       <div class="flex gap-2">
         <button
-          class="px-3 py-1 rounded bg-ink text-white text-sm disabled:opacity-40"
+          class="px-3 py-1 rounded bg-sage text-ink text-sm font-medium disabled:opacity-40"
           [disabled]="saving()"
           (click)="save()">
           {{ saving() ? 'Saving…' : (editingId() ? 'Update' : 'Add') }}
         </button>
         <button
-          class="px-3 py-1 rounded border text-sm"
+          class="px-3 py-1 rounded border border-stone/30 text-stone text-sm"
           [disabled]="saving()"
           (click)="closeForm()">
           Cancel
@@ -52,13 +52,13 @@
   }
 
   @if (loading()) {
-    <p class="text-sm text-gray-500">Loading time off…</p>
+    <p class="text-sm text-stone/60">Loading time off…</p>
   } @else if (entries().length === 0) {
-    <p class="text-sm text-gray-500">No time off for this date.</p>
+    <p class="text-sm text-stone/60">No time off for this date.</p>
   } @else {
     <table class="w-full text-sm">
       <thead>
-        <tr class="text-left text-gray-500 border-b">
+        <tr class="text-left text-terracotta border-b border-stone/20">
           <th class="py-1 pr-2">Start</th>
           <th class="py-1 pr-2">End</th>
           <th class="py-1 pr-2">Reason</th>
@@ -67,12 +67,12 @@
       </thead>
       <tbody>
         @for (entry of entries(); track entry.id) {
-          <tr class="border-b">
+          <tr class="border-b border-stone/10">
             <td class="py-1 pr-2">{{ formatTime(entry.starts_at) }}</td>
             <td class="py-1 pr-2">{{ formatTime(entry.ends_at) }}</td>
             <td class="py-1 pr-2">{{ entry.reason || '—' }}</td>
             <td class="py-1 flex gap-2">
-              <button class="text-ink hover:underline" (click)="openEditForm(entry)">Edit</button>
+              <button class="text-sage hover:underline" (click)="openEditForm(entry)">Edit</button>
               <button class="text-terracotta hover:underline" (click)="remove(entry)">Delete</button>
             </td>
           </tr>

@@ -1,18 +1,18 @@
-<div class="border rounded p-4 space-y-3">
-  <h3 class="font-semibold font-serif text-lg">Bookings</h3>
+<div class="border-3 border-sage/50 rounded-lg p-6 space-y-3 text-stone">
+  <h3 class="font-semibold font-serif text-2xl text-sage">Bookings</h3>
 
   @if (errorMessage()) {
-    <p class="text-red-600 text-sm">{{ errorMessage() }}</p>
+    <p class="text-terracotta text-sm">{{ errorMessage() }}</p>
   }
 
   @if (loading()) {
-    <p class="text-sm text-gray-500">Loading bookings…</p>
+    <p class="text-sm text-stone/60">Loading bookings…</p>
   } @else if (bookings().length === 0) {
-    <p class="text-sm text-gray-500">No bookings for this date.</p>
+    <p class="text-sm text-stone/60">No bookings for this date.</p>
   } @else {
     <table class="w-full text-sm">
       <thead>
-        <tr class="text-left text-gray-500 border-b">
+        <tr class="text-left text-terracotta border-b border-stone/20">
           <th class="py-1 pr-2">Time</th>
           <th class="py-1 pr-2">Customer</th>
           <th class="py-1 pr-2">Service</th>
@@ -22,7 +22,7 @@
       </thead>
       <tbody>
         @for (b of bookings(); track b.id) {
-          <tr class="border-b">
+          <tr class="border-b border-stone/10">
             <td class="py-1 pr-2">{{ formatTime(b.starts_at) }}</td>
             <td class="py-1 pr-2">{{ b.customer_name }}</td>
             <td class="py-1 pr-2">{{ b.services?.name }}</td>

@@ -1,97 +1,108 @@
-<section class="max-w-3xl mx-auto p-6 space-y-6">
-  <h2 class="text-2xl font-semibold font-serif text-ink">Book a slot</h2>
+<section class="min-h-screen w-full flex flex-col items-center px-4 py-10 sm:py-16 font-sans text-stone">
+  <div class="w-full max-w-5xl space-y-6">
 
-  <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
-    <div>
-      <label class="block text-sm mb-1">Salon</label>
-      <select class="w-full border rounded px-2 py-1"
-              (change)="onSalonChange($any($event.target).value)">
-        <option value="">Select salon</option>
-        @for (salon of salons(); track salon.id) {
-          <option [value]="salon.id">{{ salon.name }}</option>
-        }
-      </select>
-    </div>
-
-    <div>
-      <label class="block text-sm mb-1">Staff</label>
-      <select class="w-full border rounded px-2 py-1"
-              [disabled]="!selectedSalonId()"
-              (change)="onStaffChange($any($event.target).value)">
-        <option value="">Select staff</option>
-        @for (member of staff(); track member.id) {
-          <option [value]="member.id">{{ member.full_name }}</option>
-        }
-      </select>
-    </div>
-
-    <div>
-      <label class="block text-sm mb-1">Service</label>
-      <select class="w-full border rounded px-2 py-1"
-              [disabled]="!selectedStaffId()"
-              (change)="onServiceChange($any($event.target).value)">
-        <option value="">Select service</option>
-        @for (service of services(); track service.id) {
-          <option [value]="service.id">{{ service.name }} ({{ service.duration_minutes }} min)</option>
-        }
-      </select>
-    </div>
-
-    <div>
-      <label class="block text-sm mb-1">Date</label>
-      <input type="date" class="w-full border rounded px-2 py-1"
-             [value]="selectedDate()"
-             (change)="onDateChange($any($event.target).value)" />
-    </div>
-  </div>
-
-  @if (errorMessage()) {
-  <p class="text-red-600 text-sm">{{ errorMessage() }}</p>
-  }
-
-  @if (loadingSlots()) {
-    <p class="text-sm text-gray-500">Loading times…</p>
-  } @else if (slots().length > 0) {
-    <div class="space-y-3">
-      <input
-        type="text"
-        placeholder="Customer name"
-        class="border rounded px-2 py-1 w-full sm:w-64"
-        [value]="customerName()"
-        (input)="customerName.set($any($event.target).value)" />
-
-      <div class="flex flex-wrap gap-2">
-        @for (slot of slots(); track slot) {
-          <button
-            class="px-3 py-2 rounded border hover:bg-gray-100 disabled:opacity-40"
-            [disabled]="booking()"
-            (click)="bookSlot(slot)">
-            {{ formatSlot(slot) }}
-          </button>
-        }
+    <!-- Slot Picker -->
+    <div class="border-3 border-sage/50 rounded-lg p-6 sm:p-8 space-y-6">
+      <div>
+        <h2 class="text-4xl font-semibold font-serif text-sage">Book a slot</h2>
+        <p class="text-sm text-stone/60 mt-1">Find an opening, manage bookings and protect time off.</p>
       </div>
-    </div>
-  } @else if (canSearch()) {
-    <p class="text-sm text-gray-500">No available times for this selection.</p>
-  } @else {
-    <p class="text-sm text-gray-500">Select a staff member, service, and date to see available times.</p>
-  }
 
-  @if (selectedStaffId() && selectedSalon()) {
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <app-bookings-list
-        [staffId]="selectedStaffId()!"
-        [date]="selectedDate()"
-        [timezone]="selectedSalon()!.timezone"
-        (bookingCancelled)="searchSlots()">
-      </app-bookings-list>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div>
+          <label class="block text-sm font-semibold mb-1 text-terracotta">Salon</label>
+          <select class="w-full rounded px-3 py-2 bg-charcoal border border-stone/30 text-stone"
+                  (change)="onSalonChange($any($event.target).value)">
+            <option value="">Select salon</option>
+            @for (salon of salons(); track salon.id) {
+              <option [value]="salon.id">{{ salon.name }}</option>
+            }
+          </select>
+        </div>
 
-      <app-time-off
-        [staffId]="selectedStaffId()!"
-        [date]="selectedDate()"
-        [timezone]="selectedSalon()!.timezone"
-        (timeOffChanged)="searchSlots()">
-      </app-time-off>
+        <div>
+          <label class="block text-sm font-semibold mb-1 text-terracotta">Staff</label>
+          <select class="w-full rounded px-3 py-2 bg-charcoal border border-stone/30 text-stone disabled:opacity-40"
+                  [disabled]="!selectedSalonId()"
+                  (change)="onStaffChange($any($event.target).value)">
+            <option value="">Select staff</option>
+            @for (member of staff(); track member.id) {
+              <option [value]="member.id">{{ member.full_name }}</option>
+            }
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold mb-1 text-terracotta">Service</label>
+          <select class="w-full rounded px-3 py-2 bg-charcoal border border-stone/30 text-stone disabled:opacity-40"
+                  [disabled]="!selectedStaffId()"
+                  (change)="onServiceChange($any($event.target).value)">
+            <option value="">Select service</option>
+            @for (service of services(); track service.id) {
+              <option [value]="service.id">{{ service.name }} ({{ service.duration_minutes }} min)</option>
+            }
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold mb-1 text-terracotta">Date</label>
+          <input type="date" class="w-full rounded px-3 py-2 bg-charcoal border border-stone/30 text-stone [color-scheme:dark]"
+                 [value]="selectedDate()"
+                 (change)="onDateChange($any($event.target).value)" />
+        </div>
+      </div>
+
+      @if (errorMessage()) {
+        <p class="text-terracotta text-sm">{{ errorMessage() }}</p>
+      }
+
+      @if (loadingSlots()) {
+        <p class="text-sm text-stone/60">Loading times…</p>
+      } @else if (slots().length > 0) {
+        <div class="space-y-4">
+          <input
+            type="text"
+            placeholder="Customer name"
+            class="rounded px-3 py-2 w-full bg-charcoal border border-stone/30 text-stone placeholder:text-stone/40"
+            [value]="customerName()"
+            (input)="customerName.set($any($event.target).value)" />
+
+          <div class="flex flex-wrap gap-2">
+            @for (slot of slots(); track slot) {
+              <button
+                class="px-4 py-2 rounded border border-sage/40 text-stone hover:bg-sage/10 disabled:opacity-40"
+                [disabled]="booking()"
+                (click)="bookSlot(slot)">
+                {{ formatSlot(slot) }}
+              </button>
+            }
+          </div>
+        </div>
+      } @else if (canSearch()) {
+        <p class="text-sm text-stone/60">No available times for this selection.</p>
+      } @else {
+        <p class="text-sm text-stone/60">Select a staff member, service, and date to see available times.</p>
+      }
     </div>
-  }
+
+    <!-- Bookings + Time off -->
+    @if (selectedStaffId() && selectedSalon()) {
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <app-bookings-list
+          [staffId]="selectedStaffId()!"
+          [date]="selectedDate()"
+          [timezone]="selectedSalon()!.timezone"
+          (bookingCancelled)="searchSlots()">
+        </app-bookings-list>
+
+        <app-time-off
+          [staffId]="selectedStaffId()!"
+          [date]="selectedDate()"
+          [timezone]="selectedSalon()!.timezone"
+          (timeOffChanged)="searchSlots()">
+        </app-time-off>
+      </div>
+    }
+
+  </div>
 </section>
