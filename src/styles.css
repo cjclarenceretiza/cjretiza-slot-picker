@@ -1,3 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
 
-@import 'tailwindcss';
+@theme {
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Fraunces", ui-serif, Georgia, serif;
+
+  --color-ink: #172920;
+  --color-sage: #AFC097;
+  --color-stone: #CDC9C2;
+  --color-terracotta: #C78D84;
+  --color-charcoal: #181A1B;
+}

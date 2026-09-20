@@ -1,5 +1,5 @@
 // src/app/features/book-slot/book-slot.component.ts
-import { Component, OnInit, inject, signal, computed } from '@angular/core';
+import { Component, OnInit, inject, signal, computed, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -49,6 +49,20 @@ export class BookSlotComponent implements OnInit {
   canSearch = computed(() =>
     !!this.selectedStaffId() && !!this.selectedServiceId() && !!this.selectedDate()
   );
+
+  constructor() {
+    effect(() => {
+      const staffId = this.selectedStaffId();
+      const serviceId = this.selectedServiceId();
+      const date = this.selectedDate();
+
+      if (staffId && serviceId && date) {
+        this.searchSlots();
+      } else {
+        this.slots.set([]);
+      }
+    });
+  }
 
   async ngOnInit() {
     this.salons.set(await this.salonService.listSalons());

@@ -1,5 +1,5 @@
 <section class="max-w-3xl mx-auto p-6 space-y-6">
-  <h2 class="text-2xl font-semibold" style="font-family: Fraunces, serif;">Book a slot</h2>
+  <h2 class="text-2xl font-semibold font-serif text-ink">Book a slot</h2>
 
   <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
     <div>
@@ -45,19 +45,13 @@
     </div>
   </div>
 
-  <button
-    class="px-4 py-2 rounded text-white disabled:opacity-40"
-    style="background-color: #172920;"
-    [disabled]="!canSearch() || loadingSlots()"
-    (click)="searchSlots()">
-    {{ loadingSlots() ? 'Loading…' : 'Find times' }}
-  </button>
-
   @if (errorMessage()) {
-    <p class="text-red-600 text-sm">{{ errorMessage() }}</p>
+  <p class="text-red-600 text-sm">{{ errorMessage() }}</p>
   }
 
-  @if (slots().length > 0) {
+  @if (loadingSlots()) {
+    <p class="text-sm text-gray-500">Loading times…</p>
+  } @else if (slots().length > 0) {
     <div class="space-y-3">
       <input
         type="text"
@@ -77,7 +71,9 @@
         }
       </div>
     </div>
-  } @else if (canSearch() && !loadingSlots()) {
-    <p class="text-sm text-gray-500">No search run yet, or no times available.</p>
+  } @else if (canSearch()) {
+    <p class="text-sm text-gray-500">No available times for this selection.</p>
+  } @else {
+    <p class="text-sm text-gray-500">Select a staff member, service, and date to see available times.</p>
   }
 </section>
